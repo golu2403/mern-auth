@@ -2,6 +2,7 @@ import { z } from "zod";
 import catchError from "../utils/catchError";
 import { createAccount } from "../services/auth.service";
 import { CREATED } from "../constant/http";
+import { setAuthCookies } from "../utils/cookies";
 
 
 const registerSchema=z.object({
@@ -33,8 +34,8 @@ export const registerHandler=catchError(
 
         //return response
 
-        return
-        res.status(CREATED).json(user)
+        return setAuthCookies({res,accessToken,refreshToken})
+        .status(CREATED).json(user)
 
     }
 )
